@@ -1864,14 +1864,7 @@ class wpdb {
 				
 		$this->check_current_query = false;
 		
-		$returnVAls = $this->query( $this->prepare( $sql, $values ) );
-		
-		if (isset($this->last_error)) {
-			echo "<br /><br />";
-			var_dump($this->last_error);
-		}
-		
-		return $returnVAls;
+		return $this->query( $this->prepare( $sql, $values ) );	
 	}
 
 	/**
