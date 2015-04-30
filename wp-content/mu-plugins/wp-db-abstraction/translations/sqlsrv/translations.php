@@ -314,14 +314,15 @@ class SQL_Translations extends wpdb
                 $this->translation_changes[] = $old_query;
             }
         }
+		
         if (!empty($this->preg_data)) {
-			
-			$unsecpd = $this->preg_data;
-			foreach ($this->preg_data as $key => $value) {
-				$unsecpd[$key] = $this->translate_general($value);
-			}
-			$query = vsprintf($query, $this->preg_data);
-            //$query = vsprintf($query, $unsecpd);
+            $unsecpd = $this->preg_data;
+            // Remember to translate the rest of the terms as well:			
+            foreach ($this->preg_data as $key => $value) {
+                $unsecpd[$key] = $this->translate_general($value);
+            }
+            //$query = vsprintf($query, $this->preg_data);
+            $query = vsprintf($query, $unsecpd);
 		}
         $this->preg_data = array();
 
@@ -332,10 +333,6 @@ class SQL_Translations extends wpdb
 
         // debug code
         // file_put_contents(dirname(__FILE__) . '/translate.log', $this->preg_original . PHP_EOL . $query . PHP_EOL . PHP_EOL, FILE_APPEND);
-		
-		//var_dump($query);
-		//if (strpos($query, 'Link') !== FALSE) { var_dump($query); }
-		
         return $query;
     }
     
