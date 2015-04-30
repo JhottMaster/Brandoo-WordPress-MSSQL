@@ -3,9 +3,9 @@
  * The base configurations of the WordPress.
  *
  * This file has the following configurations: MySQL settings, Table Prefix,
- * Secret Keys, WordPress Language, and ABSPATH. You can find more information
- * by visiting {@link http://codex.wordpress.org/Editing_wp-config.php Editing
- * wp-config.php} Codex page. You can get the MySQL settings from your web host.
+ * Secret Keys, and ABSPATH. You can find more information by visiting
+ * {@link http://codex.wordpress.org/Editing_wp-config.php Editing wp-config.php}
+ * Codex page. You can get the MySQL settings from your web host.
  *
  * This file is used by the wp-config.php creation script during the
  * installation. You don't have to use the web site, you can just copy this file
@@ -26,9 +26,6 @@ define('DB_PASSWORD', 'password_here');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
-
-/** Database Type.*/
-define('DB_TYPE', 'pdo_sqlsrv');
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
@@ -63,20 +60,6 @@ define('NONCE_SALT',       'put your unique phrase here');
  * prefix. Only numbers, letters, and underscores please!
  */
 $table_prefix  = 'wp_';
-
-/** Query Logging Settings */
-define('SAVEQUERIES', FALSE);
-define('QUERY_LOG', 'app_log_path_here');
-
-/**
- * WordPress Localized Language, defaults to English.
- *
- * Change this to localize WordPress. A corresponding MO file for the chosen
- * language must be installed to wp-content/languages. For example, install
- * de_DE.mo to wp-content/languages and set WPLANG to 'de_DE' to enable German
- * language support.
- */
-define('WPLANG', '');
 
 /**
  * For developers: WordPress debugging mode.

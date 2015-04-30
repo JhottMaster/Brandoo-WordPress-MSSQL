@@ -314,10 +314,15 @@ class SQL_Translations extends wpdb
                 $this->translation_changes[] = $old_query;
             }
         }
-
         if (!empty($this->preg_data)) {
-            $query = vsprintf($query, $this->preg_data);
-        }
+			
+			$unsecpd = $this->preg_data;
+			foreach ($this->preg_data as $key => $value) {
+				$unsecpd[$key] = $this->translate_general($value);
+			}
+			$query = vsprintf($query, $this->preg_data);
+            //$query = vsprintf($query, $unsecpd);
+		}
         $this->preg_data = array();
 
         if ( $this->insert_query ) {
@@ -327,6 +332,10 @@ class SQL_Translations extends wpdb
 
         // debug code
         // file_put_contents(dirname(__FILE__) . '/translate.log', $this->preg_original . PHP_EOL . $query . PHP_EOL . PHP_EOL, FILE_APPEND);
+		
+		//var_dump($query);
+		//if (strpos($query, 'Link') !== FALSE) { var_dump($query); }
+		
         return $query;
     }
     
@@ -365,6 +374,12 @@ class SQL_Translations extends wpdb
      */
     function translate_general($query)
     {
+		// SHOW FULL COLUMNS FROM (MSSQL Server Syntax is different)
+        if ( stripos($query, 'SHOW FULL COLUMNS FROM ' ) === 0) {
+			// Need to make sure the query actually returns the results that would normally be returned in a MySQL query as WordPress would expect.
+            $query = str_replace('SHOW FULL COLUMNS FROM ', "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N", str_replace('`', "'", $query));
+        }
+		
         // SERVER VERSION
         if ( stripos($query, 'SELECT VERSION()' ) === 0) {
             $query = substr_replace($query, 'SELECT @@VERSION', 0, 16);
